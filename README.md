@@ -31,6 +31,8 @@ cd repository-name
 2. Install dependencies:
 ```
 npm install
+npm install swagger-jsdoc swagger-ui-express
+
 ```
 
 4. Configure environment variables: Create a .env file in the root directory and add the following variables:
