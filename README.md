@@ -32,6 +32,7 @@ cd repository-name
 ```
 npm install
 npm install swagger-jsdoc swagger-ui-express
+npm install --save-dev jest supertest nodemon
 
 ```
 
