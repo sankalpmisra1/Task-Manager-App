@@ -7,7 +7,8 @@ const { protect } = require('./middlewares/authMiddleware');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const xss = require('xss-clean');
-const csrf = require('csurf');
+// const csrf = require('csurf');
+const { swaggerUi, specs } = require('./config/swagger');
 dotenv.config();
 
 // Connect to the database
@@ -21,7 +22,7 @@ app.use(express.json());
 // Security middlewares
 app.use(helmet()); // Sets various HTTP headers for security
 app.use(xss()); // Prevents XSS attacks
-app.use(csrf({ cookie: true })); // CSRF protection
+// app.use(csrf({ cookie: true })); // CSRF protection
 
 // Rate limiting middleware
 const limiter = rateLimit({
@@ -30,9 +31,10 @@ const limiter = rateLimit({
     message: 'Too many requests from this IP, please try again after 15 minutes'
   });
   
-  // Apply rate limiting to all requests
-  app.use(limiter);
-
+// Apply rate limiting to all requests
+app.use(limiter);
+// Swagger UI setup
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', protect, taskRoutes);
